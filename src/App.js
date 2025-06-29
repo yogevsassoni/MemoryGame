@@ -18,6 +18,7 @@ function App() {
   const [matchedCard, setMatchedCard] = useState([]);
   const [movesCount, setMovesCount] = useState(0);
   const [pairFound, setPairFound] = useState(0);
+  const [victory, setVictory] = useState(false);
 
   const handleClick = (index) => {
     if (flipped.length < 2 && !flipped.includes(index) && !matchedCard.includes(index)) {
@@ -49,11 +50,13 @@ function App() {
   useEffect(() => {
   if (pairFound === values.length) {
     alert("Victory!");
+    setVictory(true);
   }
   }, [pairFound, values.length]);
 
 
   const restartGame = () => {
+    setVictory(false);
     setMatchedCard([]);
     setMovesCount(0);
     setPairFound(0);
@@ -61,25 +64,31 @@ function App() {
   }
 
   const gridStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: '16px',
-    maxWidth: '600px',
-    margin: '0 auto',
-    padding: '20px',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, 1fr)',
+  gap: '12px',
+  maxWidth: '400px', // was 600px before
+  margin: '0 auto',
+  padding: '10px',
   };
-
-
 
   return (
     <div>
-      <p style={{textAlign:'center'}}>
-        moves done: {movesCount}
-      </p>
-      {pairFound === values.length && <button onClick={restartGame} style={{textAlign:'center'}}>
-        restart game!
-      </button>
-      }
+      <div className="moves-counter">
+        <p>Moves Done: {movesCount}</p>
+      </div>
+
+      {victory && (
+        <div className="victory-screen">
+          <h1 className="victory-title">Congratulations! 🎉</h1>
+          <p className="victory-subtitle">You completed the game in <strong>{movesCount}</strong> moves.</p>
+          <button className="victory-button" onClick={restartGame}>
+            🔁 Play Again
+        </button>
+        </div>
+    )}
+
+
       <div className='card-container' style={gridStyle}>
         {cards.map((value, index) => (
           <Card
