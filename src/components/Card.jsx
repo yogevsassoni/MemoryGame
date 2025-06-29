@@ -8,16 +8,20 @@ export default function Card({ value, isFlipped, onClick }) {
     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
     backgroundColor: '#fff',
     width: '150px',
+    height: '150px',
     margin: '20px auto',
     textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '2rem',
+    cursor: 'pointer',
+    userSelect: 'none',
   };
-  const showCardValue = (isFlipped && <p className="card-content">
-        {value}
-      </p>);
 
   return (
     <div className="card" style={cardStyle} onClick={onClick}>
-      {showCardValue}
+      {isFlipped ? value : "❓"}
     </div>
   );
 }
